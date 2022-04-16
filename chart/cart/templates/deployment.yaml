@@ -17,11 +17,11 @@ spec:
         image: tmdwn0704/all-in-one-cart:1.0
         command: ["/bin/sh", "-c"]
         args:
-        - ./wait-for-it.sh cart-db.default.svc:3306 -t 0;
+        - ./wait-for-it.sh cart-db.default.svc:27017 -t 0;
           node app.js;
         imagePullPolicy: Always
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
         envFrom:
         - configMapRef:
             name: cart-url
@@ -31,14 +31,14 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: 8000
+            port: 8080
           initialDelaySeconds: 120
           periodSeconds: 5
 
         readinessProbe:
           httpGet:
             path: /health
-            port: 8000
+            port: 8080 
           initialDelaySeconds: 0
           periodSeconds: 2
 
